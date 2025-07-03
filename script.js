@@ -1,4 +1,4 @@
- class SolarSystem {
+    class SolarSystem {
             constructor() {
                 try {
                     this.scene = new THREE.Scene();
@@ -10,7 +10,7 @@
                     this.isPaused = false;
                     this.isDarkTheme = true;
                     this.planets = [];
-                    this.starLayers = []; // To hold star layers for parallax effect
+                    this.starLayers = [];
                     
                     this.sunData = {
                         name: 'Sun',
@@ -18,14 +18,14 @@
                     };
 
                     this.planetData = [
-                        { name: 'Mercury', size: 0.38, actualDiameter: '4,880 km', distance: 8, baseSpeed: 4.74, actualSpeed: '47.4 km/s', animationSpeed: 1.0, color: 0x8c7853, info: 'The smallest and fastest planet, Mercury zips around the Sun in just 88 Earth days.' },
-                        { name: 'Venus', size: 0.95, actualDiameter: '12,104 km', distance: 12, baseSpeed: 3.50, actualSpeed: '35.0 km/s', animationSpeed: 1.0, color: 0xffc649, info: 'Venus is the hottest planet in our solar system due to a thick, toxic atmosphere.' },
-                        { name: 'Earth', size: 1.0, actualDiameter: '12,742 km', distance: 16, baseSpeed: 2.98, actualSpeed: '29.8 km/s', animationSpeed: 1.0, color: 0x6b93d6, info: 'Our home is the only place in the universe known to harbor life.' },
-                        { name: 'Mars', size: 0.53, actualDiameter: '6,779 km', distance: 20, baseSpeed: 2.41, actualSpeed: '24.1 km/s', animationSpeed: 1.0, color: 0xc1440e, info: 'The "Red Planet" is home to the largest volcano in the solar system, Olympus Mons.' },
-                        { name: 'Jupiter', size: 2.5, actualDiameter: '139,820 km', distance: 28, baseSpeed: 1.31, actualSpeed: '13.1 km/s', animationSpeed: 1.0, color: 0xd8ca9d, info: 'The largest planet, Jupiter is a gas giant with a massive storm, the Great Red Spot.' },
-                        { name: 'Saturn', size: 2.1, actualDiameter: '116,460 km', distance: 36, baseSpeed: 0.97, actualSpeed: '9.7 km/s', animationSpeed: 1.0, color: 0xfad5a5, info: 'Saturn is famous for its stunning and complex system of icy rings.' },
-                        { name: 'Uranus', size: 1.6, actualDiameter: '50,724 km', distance: 44, baseSpeed: 0.68, actualSpeed: '6.8 km/s', animationSpeed: 1.0, color: 0x4fd0e7, info: 'An ice giant that is tilted on its side, causing it to orbit like a rolling ball.' },
-                        { name: 'Neptune', size: 1.5, actualDiameter: '49,244 km', distance: 52, baseSpeed: 0.54, actualSpeed: '5.4 km/s', animationSpeed: 1.0, color: 0x4b70dd, info: 'The most distant planet, Neptune is a dark, cold, and incredibly windy ice giant.' }
+                        { name: 'Mercury', size: 0.38, actualDiameter: '4,880 km', distance: 8, baseSpeed: 4.74, actualSpeed: '47.4 km/s', animationSpeed: 1.5, color: 0x8c7853, info: 'The smallest and fastest planet, Mercury zips around the Sun in just 88 Earth days.' },
+                        { name: 'Venus', size: 0.95, actualDiameter: '12,104 km', distance: 12, baseSpeed: 3.50, actualSpeed: '35.0 km/s', animationSpeed: 1.5, color: 0xffc649, info: 'Venus is the hottest planet in our solar system due to a thick, toxic atmosphere.' },
+                        { name: 'Earth', size: 1.0, actualDiameter: '12,742 km', distance: 16, baseSpeed: 2.98, actualSpeed: '29.8 km/s', animationSpeed: 1.5, color: 0x6b93d6, info: 'Our home is the only place in the universe known to harbor life.' },
+                        { name: 'Mars', size: 0.53, actualDiameter: '6,779 km', distance: 20, baseSpeed: 2.41, actualSpeed: '24.1 km/s', animationSpeed: 1.5, color: 0xc1440e, info: 'The "Red Planet" is home to the largest volcano in the solar system, Olympus Mons.' },
+                        { name: 'Jupiter', size: 2.5, actualDiameter: '139,820 km', distance: 28, baseSpeed: 1.31, actualSpeed: '13.1 km/s', animationSpeed: 1.5, color: 0xd8ca9d, info: 'The largest planet, Jupiter is a gas giant with a massive storm, the Great Red Spot.' },
+                        { name: 'Saturn', size: 2.1, actualDiameter: '116,460 km', distance: 36, baseSpeed: 0.97, actualSpeed: '9.7 km/s', animationSpeed: 1.5, color: 0xfad5a5, info: 'Saturn is famous for its stunning and complex system of icy rings.' },
+                        { name: 'Uranus', size: 1.6, actualDiameter: '50,724 km', distance: 44, baseSpeed: 0.68, actualSpeed: '6.8 km/s', animationSpeed: 1.5, color: 0x4fd0e7, info: 'An ice giant that is tilted on its side, causing it to orbit like a rolling ball.' },
+                        { name: 'Neptune', size: 1.5, actualDiameter: '49,244 km', distance: 52, baseSpeed: 0.54, actualSpeed: '5.4 km/s', animationSpeed: 1.5, color: 0x4b70dd, info: 'The most distant planet, Neptune is a dark, cold, and incredibly windy ice giant.' }
                     ];
                     this.controls = {};
                     this.raycaster = new THREE.Raycaster();
@@ -161,49 +161,29 @@
                     this.planets.push({ ...data, mesh, orbitLine, angle: Math.random() * Math.PI * 2 });
                 });
             }
-
-            // UPDATED: Create a multi-layered, parallax starfield for a more dynamic background
+            
             createStars() {
                 const starColors = [new THREE.Color(0xffffff), new THREE.Color(0xfff0c1), new THREE.Color(0xcad8ff)];
-
                 const createStarLayer = (count, size, distance) => {
                     const positions = [];
                     const colors = [];
                     const geometry = new THREE.BufferGeometry();
-                    
                     for (let i = 0; i < count; i++) {
-                        const vertex = new THREE.Vector3(
-                            (Math.random() - 0.5) * 2,
-                            (Math.random() - 0.5) * 2,
-                            (Math.random() - 0.5) * 2
-                        );
-                        vertex.normalize();
-                        vertex.multiplyScalar(distance);
+                        const vertex = new THREE.Vector3((Math.random() - 0.5) * 2, (Math.random() - 0.5) * 2, (Math.random() - 0.5) * 2).normalize().multiplyScalar(distance);
                         positions.push(vertex.x, vertex.y, vertex.z);
-                        
                         const color = starColors[Math.floor(Math.random() * starColors.length)];
                         colors.push(color.r, color.g, color.b);
                     }
-                    
                     geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
                     geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-
-                    const material = new THREE.PointsMaterial({
-                        size: size,
-                        vertexColors: true,
-                        transparent: true,
-                        opacity: 0.8,
-                        sizeAttenuation: true
-                    });
-                    
+                    const material = new THREE.PointsMaterial({ size: size, vertexColors: true, transparent: true, opacity: 0.8, sizeAttenuation: true });
                     const points = new THREE.Points(geometry, material);
                     this.starLayers.push(points);
                     this.scene.add(points);
                 };
-
-                createStarLayer(5000, 0.5, 400); // Farthest, smallest stars
-                createStarLayer(3000, 0.8, 300); // Mid-distance stars
-                createStarLayer(1000, 1.2, 200); // Closest, largest stars
+                createStarLayer(5000, 0.5, 400);
+                createStarLayer(3000, 0.8, 300);
+                createStarLayer(1000, 1.2, 200);
             }
 
             createLighting() {
@@ -224,7 +204,7 @@
                             <div class="planet-speed">${planet.actualSpeed}</div>
                         </div>
                         <div class="speed-control">
-                            <input type="range" class="speed-slider" min="0" max="3" step="0.1" value="${planet.animationSpeed}">
+                            <input type="range" class="speed-slider" min="0" max="10" step="0.1" value="${planet.animationSpeed}">
                             <span class="speed-value">x${planet.animationSpeed.toFixed(1)}</span>
                         </div>`;
                     const slider = control.querySelector('.speed-slider');
@@ -279,17 +259,14 @@
                 themeBtn.textContent = this.isDarkTheme ? '🌙' : '☀️';
             }
 
-            // UPDATED: Animate star layers for parallax effect
             animate() {
                 requestAnimationFrame(() => this.animate());
                 if (!this.isPaused) {
                     const delta = this.clock.getDelta();
                     this.sun.rotation.y += delta * 0.5;
-
                     this.starLayers.forEach((layer, index) => {
-                        layer.rotation.y += delta * 0.005 * (index + 1); // Different speeds for each layer
+                        layer.rotation.y += delta * 0.005 * (index + 1);
                     });
-
                     this.planets.forEach(planet => {
                         planet.angle += delta * planet.baseSpeed * planet.animationSpeed * 0.1;
                         planet.mesh.position.x = Math.cos(planet.angle) * planet.distance;
