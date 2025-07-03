@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Solar System Simulation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="canvas-container">
+        <canvas id="solar-canvas"></canvas>
+        <div id="control-panel">
+            <div class="panel-header"><div class="panel-title">🌌 Solar System Controls</div></div>
+            <div id="planet-controls"></div>
+            <div class="control-buttons">
+                <button id="pause-btn" class="btn">⏸️ Pause</button>
+                <button id="reset-btn" class="btn">🔄 Reset</button>
+            </div>
+        </div>
+        <div id="info-panel">
+            <div class="info-title">🌟 Solar System Simulation</div>
+            <div class="info-text">
+                Hover over planets or the Sun for info.<br>
+                Use controls to adjust orbit speeds. Click and drag to rotate view.
+            </div>
+        </div>
+        <div class="toggle-panel"><button id="theme-toggle" class="theme-toggle">🌙</button></div>
+        <div id="planet-tooltip" class="planet-tooltip"></div>
+    </div>
+
+   <script src="script.js"></script>
+</body>
+</html>
